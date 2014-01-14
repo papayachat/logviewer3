@@ -1,0 +1,51 @@
+@using BootstrapSupport
+@model Object
+@section head
+{
+<style>
+body{font-family:"ff-tisa-web-pro-1","ff-tisa-web-pro-2","Lucida Grande","Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","WenQuanYi Micro Hei",sans-serif;}
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, .lead {font-family:"ff-tisa-web-pro-1","ff-tisa-web-pro-2","Lucida Grande","Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","Microsoft YaHei UI","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;line-height: 1.1}
+pre code { background: transparent; }
+
+.bs-docs-section p {
+	line-height: 2;
+}
+
+.bs-docs-section p.lead {
+	line-height: 1.4;
+}
+.nav-pills > .active > a > .badge {
+    /*color: #428bca;*/
+}
+    .normal {
+        background-color: #DFF0D8;
+        color: #3C763D;
+    }
+
+    .warning {
+        background-color: #FCF8E3;
+        color: #8A6D3B;
+    }
+
+    .dangerous {
+        background-color: #F2DEDE;
+        color: #A94442;
+    }
+</style>
+}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">最近10分钟错误数</h3>
+    </div>
+    <div class="panel-body">
+        @Html.Action("ErrorCount", "Home", new { startdatetime = DateTime.Now.AddMinutes(-10), enddatetime = DateTime.Now })
+    </div>
+</div>
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">最近1小时错误数</h3>
+    </div>
+    <div class="panel-body">
+        @Html.Action("ErrorCount", "Home", new { startdatetime = DateTime.Now.AddMinutes(-60), enddatetime = DateTime.Now })
+    </div>
+</div>

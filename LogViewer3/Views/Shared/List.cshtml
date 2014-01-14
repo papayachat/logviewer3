@@ -1,0 +1,60 @@
+﻿@using BootstrapSupport
+@using BootstrapSupport.HtmlHelpers
+@model IPagedList<LogViewer3.Models.LogDataModel.LogDataDetail>
+<div id="pickerStart" class="input-append date form_datetime">
+    <input size="12" type="text" value="@ViewBag.StartDateTime" readonly>
+    <span class="add-on"><i class="icon-th"></i></span>
+</div>
+<div id="pickerEnd" class="input-append date form_datetime">
+    <input size="12" type="text" value="@ViewBag.EndDateTime" readonly>
+    <span class="add-on"><i class="icon-th"></i></span>
+</div>
+<div style="display: inline-block; margin-bottom: 10px; vertical-align:middle;">
+    <button id="btngo" class="btn">Go</button>
+</div>
+<table class="table table-striped">
+    <caption></caption>
+    <thead>
+        <tr>
+            @foreach (var property in Model.VisibleProperties())
+            {
+                <th>
+                    @property.GetLabel()
+                </th>
+            }
+            <th></th>
+        </tr>
+    </thead>
+    @{ int index = 0; }
+    @foreach (var model in Model)
+    {
+        ViewData[index.ToString()] = model;
+        <tr>
+            @foreach (var property in model.VisibleProperties())
+            {
+                <td>
+                    @Html.Display(index + "." + property.Name)
+                </td>     
+            }
+            @{ var routevalues = model.GetIdValue(); }
+            <td>@Html.ActionLink("Details", "Details", routevalues)</td>
+        </tr>
+        index++;
+    }
+
+</table>
+@Html.Pager(Model.PageIndex,
+            Model.TotalPages,
+                x => Url.Action("List", new { Site = ViewBag.Site, Message = ViewBag.Message, StartDateTime = ViewBag.StartDateTime, PageIndex = x }),
+            " pagination-right")
+@section Scripts{
+    <script type="text/javascript">
+            $('.form_datetime').datetimepicker({ format: 'yyyy-mm-dd hh:ii', autoclose: true, todayBtn: true });
+
+            $('#btngo').on('click', function () {
+                var start = encodeURI($("#pickerStart").find("input").val());
+                var end = encodeURI($("#pickerEnd").find("input").val());
+                location.href = 'list?site=@ViewBag.Site&message=@ViewBag.Message&startdatetime=' + start + '&enddatetime=' + end + '&pageindex=1';
+            });
+    </script>
+}

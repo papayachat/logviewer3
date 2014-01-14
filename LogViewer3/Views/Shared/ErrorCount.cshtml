@@ -1,0 +1,17 @@
+﻿@model IList<LogViewer3.Models.LogStatusModel>
+@{
+    Layout = null;
+}
+
+@if (Model != null)
+{
+<div>
+        @foreach (var m in Model)
+        {
+            <div class="alert alert-success">
+                <strong>@m.Count</strong> @m.Site
+            </div>
+        }
+</div>
+}
+

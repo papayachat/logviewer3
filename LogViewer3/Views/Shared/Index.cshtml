@@ -1,0 +1,61 @@
+@using System.Collections.Specialized
+@using System.Web.UI.WebControls
+@using BootstrapSupport
+@using LogViewer3.Models
+@model System.Collections.IEnumerable   
+@{
+    <div class="input-append date form_datetime">
+        <input size="12" type="text" value="@ViewBag.StartDateTime" readonly>
+        <span class="add-on"><i class="icon-th"></i></span>
+    </div>
+    <div style="display: inline-block; margin-bottom: 10px; vertical-align:middle;">
+        <button id="btngo" class="btn">Go</button>
+    </div>
+    
+    if (Model != null)
+    {
+        <table class="table table-striped">
+            <caption></caption>
+            <thead>
+                <tr>
+                    @foreach (var property in Model.VisibleProperties())
+                    {
+                        <th>
+                            @property.GetLabel().ToSeparatedWords()
+                        </th>
+                    }
+                    <th></th>
+                </tr>
+            </thead>
+            @{ int index = 0; }
+            @foreach (var model in Model)
+            {
+                ViewData[index.ToString()] = model;
+                <tr>
+                    @{ var routevalues = ""; }
+                    @foreach (var property in model.VisibleProperties())
+                    {
+                        <td>
+                            @Html.Display(index + "." + property.Name)
+                        </td>
+                    }
+                    @{ var logDataSummary = (LogDataModel.LogDataSummary)model;}
+                    <td>@Html.ActionLink("List", "List", new { site = ViewBag.Site, message = logDataSummary.Message, startdatetime = ViewBag.StartDateTime, pageindex = 1 })</td>
+                </tr>
+                index++;
+            }
+        </table>
+    }
+    @section Scripts{
+        <script type="text/javascript">
+            var nowTemp = new Date();
+            var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+
+            $('.form_datetime').datetimepicker({ format: 'yyyy-mm-dd hh:ii', autoclose: true, todayBtn: true });
+
+            $('#btngo').on('click', function () {
+                location.href = '/?site=@ViewBag.Site&startDateTime='+encodeURI($.trim($(".form_datetime").find("input").val()));
+            });
+        </script>
+    }
+}

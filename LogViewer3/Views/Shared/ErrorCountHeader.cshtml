@@ -1,0 +1,23 @@
+﻿@model IList<LogViewer3.Models.LogStatusModel>
+@{
+    Layout = null;
+}
+
+@if (Model != null)
+{
+    @*<select class="selectpicker">
+    @foreach (KeyValuePair<string, int> kvp in Model)
+{
+    <option data-content="@kvp.Key <span class='badge'>@kvp.Value</span>">@kvp.Key</option>
+}
+    </select>*@
+<div>
+    <ul class="nav nav-pills">
+        @foreach (var m in Model)
+        {
+            <li class="active"><a href="/?site=@m.Site" style="background-color: #0088CC">@m.Site <span class="badge normal">@m.Count</span></a></li>
+        }
+    </ul>
+</div>
+}
+

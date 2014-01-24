@@ -142,7 +142,7 @@ namespace BootstrapMvcSample.Controllers
             return View(pagedList);
         }
 
-        public ActionResult LogBoard()
+        public ActionResult Board()
         {
             return View();
         }

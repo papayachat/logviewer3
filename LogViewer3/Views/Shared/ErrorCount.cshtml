@@ -1,4 +1,5 @@
-﻿@model IList<LogViewer3.Models.LogStatusModel>
+﻿@using LogViewer3.Models.Enums
+@model IList<LogViewer3.Models.LogStatusModel>
 @{
     Layout = null;
 }
@@ -8,8 +9,18 @@
 <div>
         @foreach (var m in Model)
         {
-            <div class="alert alert-success">
-                <strong>@m.Count</strong> @m.Site
+            var cssName = "alert-success";
+            switch (m.Status)
+            {
+                case LogStatus.Warning:
+                    cssName = "alert-warning";
+                    break;
+                case LogStatus.Dangerous:
+                    cssName = "alert-danger";
+                    break;
+            }
+            <div class="alert inlineblock @cssName">
+                <a href="/?site=@m.Site&startDateTime=@DateTime.Now.AddMinutes(-10)" target="_blank">@m.Site</a> <strong>@m.Count</strong>
             </div>
         }
 </div>

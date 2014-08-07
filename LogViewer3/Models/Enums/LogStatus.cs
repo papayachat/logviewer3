@@ -6,4 +6,10 @@
         Warning,
         Dangerous
     }
+
+    public enum Freq
+    {
+        Minute,
+        Hour
+    }
 }

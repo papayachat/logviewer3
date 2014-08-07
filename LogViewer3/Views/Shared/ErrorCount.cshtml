@@ -20,7 +20,8 @@
                     break;
             }
             <div class="alert inlineblock @cssName">
-                <a href="/?site=@m.Site&startDateTime=@DateTime.Now.AddMinutes(-10)" target="_blank">@m.Site</a> <strong>@m.Count</strong>
+                <a href="/?site=@m.Site&startDateTime=@ViewContext.RouteData.Values["startDateTime"]" target="_blank">@m.Site</a> <strong>@m.Count</strong>
+                <a href="#"><i class="icon16 icon16-array"></i></a>
             </div>
         }
 </div>

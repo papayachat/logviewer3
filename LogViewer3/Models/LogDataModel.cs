@@ -29,11 +29,23 @@ namespace LogViewer3.Models
 
         }
 
+        /// <summary>
+        /// 保存按Message分组后的数据
+        /// </summary>
         public class LogDataSummary
         {
             //public string Logger { get; set; }
             public string Message { get; set; }
             public string LogLevel { get; set; }
+            public int ErrorCnt { get; set; }
+        }
+
+        /// <summary>
+        /// 供图表显示的数据
+        /// </summary>
+        public class LogDataChart
+        {
+            public string GroupedDateTime { get; set; }
             public int ErrorCnt { get; set; }
         }
     }

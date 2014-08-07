@@ -283,8 +283,9 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\List.cshtml" />
     <Content Include="Views\Shared\ErrorCount.cshtml" />
-    <Content Include="Views\Shared\Board.cshtml" />
+    <Content Include="Views\Shared\DashBoard.cshtml" />
     <Content Include="Views\Shared\ErrorCountHeader.cshtml" />
+    <Content Include="Views\Shared\Chart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

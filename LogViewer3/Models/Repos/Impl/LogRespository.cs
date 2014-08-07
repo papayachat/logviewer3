@@ -200,6 +200,35 @@ order by sites.[site]
             return status;
         }
 
+        public IList<LogDataModel.LogDataChart> Chart(string site, DateTime startDateTime, DateTime endDateTime, Freq freq)
+        {
+            IList<LogDataModel.LogDataChart> list = new List<LogDataModel.LogDataChart>();
+            using (SqlConnection conn = new SqlConnection { ConnectionString = _connString })
+            {
+
+                var sql = freq == Freq.Minute
+                    ? @"select convert(varchar(16),logdate,20) as logdate,count(*) as cnt from errorlog(nolock) where [site]='@site' and logdate>'@startDateTime' and logdate<'@endDateTime' group by convert(varchar(16),logdate,20) order by convert(varchar(16),logdate,20)"
+                    : @"select convert(varchar(13),logdate,20) as logdate,count(*) as cnt from errorlog(nolock) where [site]='@site' and logdate>'@startDateTime' and logdate<'@endDateTime' group by convert(varchar(13),logdate,20) order by convert(varchar(13),logdate,20)";
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("site", site);
+                cmd.Parameters.AddWithValue("startDateTime", startDateTime);
+                cmd.Parameters.AddWithValue("endDateTime", endDateTime);
+
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
+                while (reader.Read())
+                {
+                    list.Add(new LogDataModel.LogDataChart
+                    {
+                        GroupedDateTime = reader[0].ToString(),
+                        ErrorCnt = (int)reader[1]
+                    });
+                }
+                conn.Close();
+                return list;
+            }
+        }
+
         /// <summary>
         /// 注意这里是每分钟错误数阈值
         /// </summary>

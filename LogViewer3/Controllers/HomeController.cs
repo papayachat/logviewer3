@@ -142,9 +142,15 @@ namespace BootstrapMvcSample.Controllers
             return View(pagedList);
         }
 
-        public ActionResult Board()
+        public ActionResult DashBoard()
         {
             return View();
+        }
+
+        public ActionResult Chart(string site, string startDateTime,string endDateTime,int freq)
+        {
+            var model = logRespository.Chart();
+            return View(model);
         }
 
         public ActionResult ErrorCount(string startDateTime, string endDateTime, string viewName = "ErrorCount")

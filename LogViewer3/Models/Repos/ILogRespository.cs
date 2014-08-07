@@ -24,5 +24,7 @@ namespace LogViewer3.Models.Repos
         IList<LogStatusModel> CurrentLogCount(DateTime startDateTime, DateTime endDateTime);
 
         LogStatus CurrentStatus(int logCount, DateTime currentDateTime, TimeSpan timeSpan);
+
+        IList<LogDataModel.LogDataChart> Chart(string site,DateTime startDateTime, DateTime endDateTime, Freq freq);
     }
 }
